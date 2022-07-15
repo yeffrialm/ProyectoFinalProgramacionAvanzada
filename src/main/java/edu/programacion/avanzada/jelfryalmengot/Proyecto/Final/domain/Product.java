@@ -1,16 +1,15 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain;
 
 
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.Conversions;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.ProductState;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.network.dto.ProductDTO;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.dto.ProductDTO;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.product.UpdateProductRequest;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
- * @author aluis on 6/12/2022.
+ * @author jelfry on 7/09/2022.
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,54 +25,36 @@ public class Product {
     private Long id;
 
     @Column
-    private String nombre_producto;
+    private String name;
 
     @Column
-    private Integer cantidad;
+    private String description;
 
     @Column
-    private Boolean disponible;
+    private long availableQuantity;
 
     @Column
-    private BigDecimal precio;
-
-
-
-    /**
-     * Conversión del enum para la DB en un número
-     */
-    @Convert(converter = Conversions.ProductStateConverter.class)
-    @Column
-    private ProductState state;
-
-    // Audit Fields, no es necesario exponer esto en la API
-    //verificar si hay que agregarle otro string o variable para los demas que faltan
-
-    @Column
-    private String createdBy;
-    @Column
-    private String updatedBy;
+    private BigDecimal price;
 
 
     /**
      * Patrón más integrado y adecuado en la lógica, cada objeto se hace responsable de sus conversiones
      *
-     * @return Modelo DTO del Direction
+     * @return Modelo DTO del Product
      */
     public ProductDTO toDTO() {
         return ProductDTO.builder()
                 .id(id)
-                .nombre_producto(nombre_producto)
-                .cantidad(cantidad)
-                .disponible(disponible)
-                .precio(precio)
+                .name(name)
+                .description(description)
+                .availableQuantity(availableQuantity)
+                .price(price)
                 .build();
     }
 
     public void applyChanges(UpdateProductRequest updateProductRequest) {
-        this.nombre_producto = updateProductRequest.getNombreProducto();
-        this.cantidad = updateProductRequest.getcantidad();
-        this.disponible = updateProductRequest.getDisponible();
-        this.precio = updateProductRequest.getPrecio();
+        description = updateProductRequest.getDescription();
+        availableQuantity = updateProductRequest.getAvailableQuantity();
+        price = updateProductRequest.getPrice();
     }
 }
