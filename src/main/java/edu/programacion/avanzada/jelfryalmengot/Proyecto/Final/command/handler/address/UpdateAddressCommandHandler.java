@@ -8,6 +8,7 @@ import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.CommandHandler;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.repositories.AddressRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 /**
  * @author jelfry on 7/09/2022.
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @CommandEvent(command = UpdateAddressCommand.class)
+@Slf4j
 
 public class UpdateAddressCommandHandler implements CommandHandler<UpdateAddressResponse, UpdateAddressCommand> {
 
@@ -27,6 +29,7 @@ public class UpdateAddressCommandHandler implements CommandHandler<UpdateAddress
         address.setSecondary(updateAddressCommand.getSecondary());
         address.setTelephone(updateAddressCommand.getTelephone());
         addressRepository.save(address);
+        log.info("Address {} updated", updateAddressCommand.getId());
          return UpdateAddressResponse.builder()
                 .address(address.toDTO())
                 .build();

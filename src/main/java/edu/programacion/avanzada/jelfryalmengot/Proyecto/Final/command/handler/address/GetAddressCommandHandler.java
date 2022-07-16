@@ -8,6 +8,7 @@ import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.CommandHandler;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.repositories.AddressRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @CommandEvent(command = GetAddressCommand.class)
+@Slf4j
 
 public class GetAddressCommandHandler implements CommandHandler<GetAddressResponse, GetAddressCommand> {
 
@@ -24,6 +26,7 @@ public class GetAddressCommandHandler implements CommandHandler<GetAddressRespon
 
     @Override
     public GetAddressResponse handle(GetAddressCommand getAddressCommand) {
+        log.debug("Get Address {}", getAddressCommand.getId());
         AddressDTO addressDTO = addressRepository.findById(getAddressCommand.getId()).orElseThrow().toDTO();
         return GetAddressResponse.builder()
                 .addresses(List.of(addressDTO))

@@ -8,6 +8,7 @@ import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.CommandHandler;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.repositories.AddressRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 /**
  * @author jelfry on 7/09/2022.
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @CommandEvent(command = CreateAddressCommand.class)
+@Slf4j
 
 public class CreateAddressCommandHandler implements CommandHandler<CreateAddressResponse, CreateAddressCommand> {
 
@@ -23,6 +25,7 @@ public class CreateAddressCommandHandler implements CommandHandler<CreateAddress
     @Override
     public CreateAddressResponse handle(CreateAddressCommand createAddressCommand) {
         Address address = addressRepository.save(createAddressCommand.toAddress());
+        log.info("Address {} created", address.getId());
          return CreateAddressResponse.builder()
                 .address(address.toDTO())
                 .build();
