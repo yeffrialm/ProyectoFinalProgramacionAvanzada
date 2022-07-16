@@ -1,7 +1,7 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.address;
 
 
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.Address;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.address.CreateAddressCommand;
 import lombok.*;
 
 /**
@@ -20,12 +20,13 @@ public class CreateAddressRequest {
     private String secondary;
     private Long telephone;
 
-
-    public Address toAddress() {
-        return Address.builder()
+    public CreateAddressCommand toCommand() {
+        return CreateAddressCommand.builder()
                 .main(main)
                 .secondary(secondary)
                 .telephone(telephone)
                 .build();
     }
+
+
 }
