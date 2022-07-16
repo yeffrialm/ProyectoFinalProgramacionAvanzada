@@ -1,16 +1,17 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.services;
 
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.Address;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.dto.AddressDTO;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.address.GetAddressCommand;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.address.GetAllAddressCommand;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.address.CreateAddressRequest;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.address.DeleteAddressRequest;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.address.UpdateAddressRequest;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.repositories.AddressRepository;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.address.CreateAddressResponse;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.address.DeleteAddressResponse;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.address.GetAddressResponse;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.address.UpdateAddressResponse;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.CommandBus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author jelfry on 7/09/2022.
@@ -20,31 +21,26 @@ import java.util.stream.Collectors;
 
 public class AddressService {
 
+    private final CommandBus commandBus;
 
-    private final AddressRepository addressRepository;
-
-    public List<AddressDTO> getAll() {
-        return addressRepository.findAll().stream().map(Address::toDTO).collect(Collectors.toList());
+    public GetAddressResponse getAll() {
+        return commandBus.sendCommand(GetAllAddressCommand.builder().build());
     }
 
-    public AddressDTO get(Long id) {
-        return addressRepository.findById(id).orElseThrow().toDTO();
+    public GetAddressResponse get(Long id) {
+        return commandBus.sendCommand(GetAddressCommand.builder().id(id).build());
     }
 
-    public AddressDTO create(CreateAddressRequest createAddressRequest) {
-        Address address = addressRepository.save(createAddressRequest.toAddress());
-        return address.toDTO();
+    public CreateAddressResponse create(CreateAddressRequest createAddressRequest) {
+        return commandBus.sendCommand(createAddressRequest.toCommand());
     }
 
-    public AddressDTO update(UpdateAddressRequest updateAddressRequest) {
-        Address address = addressRepository.findById(updateAddressRequest.getId()).orElseThrow();
-        address.applyChanges(updateAddressRequest);
-        addressRepository.save(address);
-        return address.toDTO();
+    public UpdateAddressResponse update(UpdateAddressRequest updateAddressRequest) {
+        return commandBus.sendCommand(updateAddressRequest.toCommand());
     }
 
-    public void delete(DeleteAddressRequest deleteAddressRequest) {
-        addressRepository.deleteById(deleteAddressRequest.getId());
+    public DeleteAddressResponse delete (DeleteAddressRequest deleteAddressRequest) {
+        return commandBus.sendCommand(deleteAddressRequest.toCommand());
     }
 
 }

@@ -1,7 +1,6 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain;
 
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.dto.AddressDTO;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.address.UpdateAddressRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,9 +44,4 @@ public class Address {
                 .build();
     }
 
-    public void applyChanges(UpdateAddressRequest updateAddressRequest) {
-        main = updateAddressRequest.getMain();
-        secondary = updateAddressRequest.getSecondary();
-        telephone = updateAddressRequest.getTelephone();
-    }
 }

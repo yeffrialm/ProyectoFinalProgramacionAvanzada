@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * @author jelfry on 7/09/2022.
  */
@@ -27,35 +25,26 @@ public class AddressController {
 
     @GetMapping
     public ResponseEntity<GetAddressResponse> get() {
-        return ResponseEntity.ok(GetAddressResponse.builder()
-                .addresses(addressService.getAll())
-                .build());
+        return ResponseEntity.ok(addressService.getAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GetAddressResponse> get(@PathVariable Long id) {
-        return ResponseEntity.ok(GetAddressResponse.builder()
-                .addresses(List.of(addressService.get(id)))
-                .build());
+        return ResponseEntity.ok(addressService.get(id));
     }
 
     @PostMapping
     public ResponseEntity<CreateAddressResponse> create(@RequestBody CreateAddressRequest createAddressRequest) {
-        return ResponseEntity.ok(CreateAddressResponse.builder()
-                .address(addressService.create(createAddressRequest))
-                .build());
+        return ResponseEntity.ok(addressService.create(createAddressRequest));
     }
 
     @PutMapping
     public ResponseEntity<UpdateAddressResponse> update(@RequestBody UpdateAddressRequest updateAddressRequest) {
-        return ResponseEntity.ok(UpdateAddressResponse.builder()
-                .address(addressService.update(updateAddressRequest))
-                .build());
+        return ResponseEntity.ok(addressService.update(updateAddressRequest));
     }
 
     @DeleteMapping
     public ResponseEntity<DeleteAddressResponse> delete(@RequestBody DeleteAddressRequest deleteAddressRequest) {
-        addressService.delete(deleteAddressRequest);
-        return ResponseEntity.ok(DeleteAddressResponse.builder().build());
+        return ResponseEntity.ok(addressService.delete(deleteAddressRequest));
     }
 }
