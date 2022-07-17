@@ -1,5 +1,6 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.product;
 
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.product.DeleteProductCommand;
 import lombok.*;
 
 /**
@@ -14,4 +15,10 @@ import lombok.*;
 public class DeleteProductRequest {
 
     private long id;
+
+    public DeleteProductCommand toCommand() {
+        return DeleteProductCommand.builder()
+                .id(id)
+                .build();
+    }
 }

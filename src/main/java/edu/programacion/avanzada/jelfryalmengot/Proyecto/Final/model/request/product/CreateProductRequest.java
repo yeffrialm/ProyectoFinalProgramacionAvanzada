@@ -1,7 +1,7 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.product;
 
 
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.Product;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.product.CreateProductCommand;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -24,8 +24,8 @@ public class CreateProductRequest {
     private BigDecimal price;
 
 
-    public Product toProduct() {
-        return Product.builder()
+    public CreateProductCommand toCommand() {
+        return CreateProductCommand.builder()
                 .name(name)
                 .description(description)
                 .availableQuantity(availableQuantity)

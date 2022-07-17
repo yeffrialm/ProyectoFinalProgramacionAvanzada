@@ -2,7 +2,6 @@ package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain;
 
 
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.dto.ProductDTO;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.product.UpdateProductRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,9 +51,4 @@ public class Product {
                 .build();
     }
 
-    public void applyChanges(UpdateProductRequest updateProductRequest) {
-        description = updateProductRequest.getDescription();
-        availableQuantity = updateProductRequest.getAvailableQuantity();
-        price = updateProductRequest.getPrice();
-    }
 }
