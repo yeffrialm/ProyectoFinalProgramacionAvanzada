@@ -1,5 +1,6 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.payment;
 
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.paymentmethod.DeletePaymentMethodCommand;
 import lombok.*;
 
 /**
@@ -13,4 +14,11 @@ import lombok.*;
 public class DeletePaymentMethodRequest {
 
     private Long id;
+
+    public DeletePaymentMethodCommand toCommand() {
+        return DeletePaymentMethodCommand.builder()
+                .id(id)
+                .build();
+    }
+
 }

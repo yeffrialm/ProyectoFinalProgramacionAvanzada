@@ -1,8 +1,7 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.payment;
 
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.paymentmethod.UpdatePaymentMethodCommand;
 import lombok.*;
-
-import java.math.BigDecimal;
 
 /**
  * @author jelfry on 7/09/2022.
@@ -15,8 +14,13 @@ import java.math.BigDecimal;
 public class UpdatePaymentMethodRequest {
 
     private Long id;
+    private String name;
     private String description;
-    private long availableQuantity;
-    private BigDecimal price;
 
+    public UpdatePaymentMethodCommand toCommand() {
+        return UpdatePaymentMethodCommand.builder()
+                .name(name)
+                .description(description)
+                .build();
+    }
 }

@@ -1,7 +1,7 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.payment;
 
 
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.PaymentMethod;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.paymentmethod.CreatePaymentMethodCommand;
 import lombok.*;
 
 /**
@@ -17,10 +17,12 @@ public class CreatePaymentMethodRequest {
     private String name;
     private String description;
 
-    public PaymentMethod toPaymentMethod() {
-        return PaymentMethod.builder()
+    public CreatePaymentMethodCommand toCommand() {
+        return CreatePaymentMethodCommand.builder()
                 .name(name)
                 .description(description)
                 .build();
+
+
     }
 }

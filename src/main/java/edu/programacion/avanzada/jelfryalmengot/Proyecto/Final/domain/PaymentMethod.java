@@ -2,7 +2,6 @@ package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain;
 
 
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.dto.PaymentMethodDTO;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.payment.UpdatePaymentMethodRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,8 +42,5 @@ public class PaymentMethod {
                 .build();
     }
 
-    public void applyChanges(UpdatePaymentMethodRequest updatePaymentMethodRequest) {
-        description = updatePaymentMethodRequest.getDescription();
-    }
 
 }
