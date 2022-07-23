@@ -25,6 +25,7 @@ public class ProductService {
 
 
     public GetProductResponse getAll() {
+
         return commandBus.sendCommand(GetAllProductCommand.builder().build());
     }
 

@@ -1,4 +1,4 @@
-package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout;
+package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkoutproduct;
 
 
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.dto.CheckoutProductDTO;
@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class GetCheckoutResponse {
+public class GetCheckoutProductResponse {
 
-    private List<CheckoutProductDTO> checkouts;
+    private List<CheckoutProductDTO> checkoutProducts;
 }

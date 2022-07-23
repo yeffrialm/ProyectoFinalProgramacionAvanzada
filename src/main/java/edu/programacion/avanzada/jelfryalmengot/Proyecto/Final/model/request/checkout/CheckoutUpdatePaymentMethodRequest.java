@@ -1,5 +1,7 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout;
 
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.checkout.CheckoutUpdatePaymentMethodCommand;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.PaymentMethod;
 import lombok.*;
 
 import java.util.UUID;
@@ -16,5 +18,12 @@ public class CheckoutUpdatePaymentMethodRequest {
 
     private UUID id;
 
-    private Long paymentMethod;
+    private PaymentMethod paymentMethod;
+
+    public CheckoutUpdatePaymentMethodCommand toCommand() {
+        return CheckoutUpdatePaymentMethodCommand.builder()
+                .paymentMethod(paymentMethod)
+                .build();
+    }
+
 }
