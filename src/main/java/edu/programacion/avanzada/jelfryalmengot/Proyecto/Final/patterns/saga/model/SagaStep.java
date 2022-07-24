@@ -1,4 +1,4 @@
-package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.saga.model;
+package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.saga.model;
 
 public interface SagaStep<T> {
 

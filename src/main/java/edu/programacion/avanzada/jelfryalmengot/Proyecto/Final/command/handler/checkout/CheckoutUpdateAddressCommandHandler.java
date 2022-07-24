@@ -4,7 +4,6 @@ package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.handler.
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.checkout.CheckoutUpdateAddressCommand;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.Address;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.Checkout;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.address.UpdateAddressResponse;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.CheckoutUpdateAddressResponse;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.CommandEvent;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.CommandHandler;

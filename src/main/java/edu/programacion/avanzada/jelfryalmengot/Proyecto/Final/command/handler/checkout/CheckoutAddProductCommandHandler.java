@@ -6,7 +6,6 @@ import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.checkout.
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.Checkout;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.CheckoutProduct;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.Product;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.address.CreateAddressResponse;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.CheckoutAddProductResponse;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.CommandEvent;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.CommandHandler;
