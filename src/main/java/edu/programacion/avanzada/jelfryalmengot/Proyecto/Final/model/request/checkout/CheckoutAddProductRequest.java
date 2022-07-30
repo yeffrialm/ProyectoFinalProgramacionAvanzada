@@ -1,14 +1,11 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout;
 
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.checkout.CheckoutAddProductCommand;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.CheckoutProduct;
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
- * @author jelfry on 7/09/2022.
+ * @author aluis on 7/10/2022.
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,11 +16,7 @@ public class CheckoutAddProductRequest {
 
     private UUID id;
 
-    private List<CheckoutProduct> productsToBuy;
+    private Long product;
 
-    public CheckoutAddProductCommand toCommand() {
-        return CheckoutAddProductCommand.builder()
-                //.productsToBuy(productsToBuy)
-                .build();
-    }
+    private Long quantity;
 }

@@ -1,9 +1,14 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain;
 
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.dto.CheckoutDTO;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.exceptions.CheckoutAddressNoAssignedException;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.exceptions.CheckoutPaymentMethodNoAssignedException;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.exceptions.PayCheckoutWithoutProductsException;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -48,5 +53,30 @@ public class Checkout {
      *
      * @return Modelo DTO del Checkout
      */
+
+    public Order toOrder() {
+        if (address == null) {
+            throw new CheckoutAddressNoAssignedException(id);
+        }
+        if (paymentMethod != null) {
+            throw new CheckoutPaymentMethodNoAssignedException(id);
+        }
+        if (productsToBuy.isEmpty()) {
+            throw new PayCheckoutWithoutProductsException(id);
+        }
+        BigDecimal total = new BigDecimal(0);
+        for (CheckoutProduct checkoutProduct : productsToBuy) {
+            total = total.add(checkoutProduct.getProduct().getPrice().multiply(new BigDecimal(checkoutProduct.getQuantity())));
+        }
+        return Order.builder()
+                .address(address)
+                .paymentMethod(paymentMethod)
+                .productsToBuy(productsToBuy)
+                .total(total)
+                .buyDateTime(LocalDateTime.now())
+                .build();
+    }
+
+
 
 }

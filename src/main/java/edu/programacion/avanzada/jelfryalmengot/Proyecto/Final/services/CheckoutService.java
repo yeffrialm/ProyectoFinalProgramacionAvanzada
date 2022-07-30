@@ -3,20 +3,21 @@ package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.services;
 
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.checkout.GetAllCheckoutCommand;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.checkout.GetCheckoutCommand;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.CheckoutProduct;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.*;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.dto.CheckoutDTO;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout.CheckoutAddProductRequest;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout.CheckoutUpdateAddressRequest;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout.CheckoutUpdatePaymentMethodRequest;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.CheckoutAddProductResponse;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.CheckoutUpdateAddressResponse;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.CheckoutUpdatePaymentMethodResponse;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout.PayCheckoutRequest;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.GetCheckoutResponse;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.PayCheckoutResponse;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.patterns.command.CommandBus;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,12 +28,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CheckoutService {
 
+
+    private final CommandBus commandBus;
     private final CheckoutRepository checkoutRepository;
     private final PaymentMethodRepository paymentMethodRepository;
     private final AddressRepository addressRepository;
     private final ProductRepository productRepository;
     private final CheckoutProductRepository checkoutProductRepository;
-    private final CommandBus commandBus;
 
     //List<CheckoutDTO>
     public GetCheckoutResponse getAll() {
@@ -44,19 +46,25 @@ public class CheckoutService {
         return commandBus.sendCommand(GetCheckoutCommand.builder().build());
     }
 
-    public CheckoutUpdatePaymentMethodResponse updatePaymentMethod(CheckoutUpdatePaymentMethodRequest checkoutUpdatePaymentMethodRequest) {
-
-        return commandBus.sendCommand(checkoutUpdatePaymentMethodRequest.toCommand());
+    public CheckoutDTO updatePaymentMethod(CheckoutUpdatePaymentMethodRequest checkoutUpdatePaymentMethodRequest) {
+        Checkout checkout = checkoutRepository.findById(checkoutUpdatePaymentMethodRequest.getId()).orElseThrow();
+        PaymentMethod paymentMethod = paymentMethodRepository.findById(checkoutUpdatePaymentMethodRequest.getPaymentMethod()).orElseThrow();
+        checkout.setPaymentMethod(paymentMethod);
+        checkoutRepository.save(checkout);
+        return checkout.toDTO();
     }
 
-    public CheckoutUpdateAddressResponse updateAddress(CheckoutUpdateAddressRequest checkoutUpdateAddressRequest) {
-        return commandBus.sendCommand(checkoutUpdateAddressRequest.toCommand());
+    public CheckoutDTO updateAddress(CheckoutUpdateAddressRequest checkoutUpdateAddressRequest) {
+        Checkout checkout = checkoutRepository.findById(checkoutUpdateAddressRequest.getId()).orElseThrow();
+        Address address = addressRepository.findById(checkoutUpdateAddressRequest.getAddress()).orElseThrow();
+        checkout.setAddress(address);
+        checkoutRepository.save(checkout);
+        return checkout.toDTO();
     }
 
     @Transactional
-    public CheckoutAddProductResponse addProducts(CheckoutAddProductRequest checkoutAddProductRequest) {
-        return commandBus.sendCommand(checkoutAddProductRequest.toCommand());
-       /* Checkout checkout = checkoutRepository.findById(checkoutAddProductRequest.getId()).orElseThrow();
+    public CheckoutDTO addProducts(CheckoutAddProductRequest checkoutAddProductRequest) {
+        Checkout checkout = checkoutRepository.findById(checkoutAddProductRequest.getId()).orElseThrow();
         Product product = productRepository.findById(checkoutAddProductRequest.getProduct()).orElseThrow();
         if (checkoutAddProductRequest.getQuantity() > product.getAvailableQuantity()) {
             throw new RuntimeException("Available product if less than you need");
@@ -81,7 +89,11 @@ public class CheckoutService {
         productRepository.save(product);
         checkout.setProductsToBuy(productsToBuy);
         checkoutRepository.save(checkout);
-        return checkout.toDTO();*/
+        return checkout.toDTO();
+    }
+
+    public PayCheckoutResponse pay(PayCheckoutRequest payCheckoutRequest){
+        return commandBus.sendCommand(payCheckoutRequest.toCommand());
     }
 
     private CheckoutProduct findProductInCheckout(List<CheckoutProduct> productsToBuy, Long productId) {
@@ -92,4 +104,8 @@ public class CheckoutService {
         }
         return null;
     }
+
+
+
+
 }

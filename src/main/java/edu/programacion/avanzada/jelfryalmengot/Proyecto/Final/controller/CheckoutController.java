@@ -4,10 +4,8 @@ package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.controller;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout.CheckoutAddProductRequest;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout.CheckoutUpdateAddressRequest;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout.CheckoutUpdatePaymentMethodRequest;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.CheckoutAddProductResponse;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.CheckoutUpdateAddressResponse;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.CheckoutUpdatePaymentMethodResponse;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.GetCheckoutResponse;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout.PayCheckoutRequest;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.response.checkout.*;
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.services.CheckoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,7 @@ import java.util.UUID;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/checkouts")
+@RequestMapping("/checkout")
 public class CheckoutController {
 
     private final CheckoutService checkoutService;
@@ -38,16 +36,28 @@ public class CheckoutController {
 
     @PostMapping("/update/address")
     public ResponseEntity<CheckoutUpdateAddressResponse> updateAddress(@RequestBody CheckoutUpdateAddressRequest checkoutUpdateAddressRequest) {
-        return ResponseEntity.ok(checkoutService.updateAddress(checkoutUpdateAddressRequest));
+        return ResponseEntity.ok(CheckoutUpdateAddressResponse.builder()
+                .checkout(checkoutService.updateAddress(checkoutUpdateAddressRequest))
+                .build());
     }
 
     @PostMapping("/update/payment/method")
     public ResponseEntity<CheckoutUpdatePaymentMethodResponse> updatePaymentMethod(@RequestBody CheckoutUpdatePaymentMethodRequest checkoutUpdatePaymentMethodRequest) {
-        return ResponseEntity.ok(checkoutService.updatePaymentMethod(checkoutUpdatePaymentMethodRequest));
+        return ResponseEntity.ok(CheckoutUpdatePaymentMethodResponse.builder()
+                .checkout(checkoutService.updatePaymentMethod(checkoutUpdatePaymentMethodRequest))
+                .build());
     }
 
     @PostMapping("/add/product")
     public ResponseEntity<CheckoutAddProductResponse> addProduct(@RequestBody CheckoutAddProductRequest checkoutAddProductRequest) {
-        return ResponseEntity.ok(checkoutService.addProducts(checkoutAddProductRequest));
+        return ResponseEntity.ok(CheckoutAddProductResponse.builder()
+                .checkout(checkoutService.addProducts(checkoutAddProductRequest))
+                .build());
+    }
+
+    @PostMapping("/pay")
+    public ResponseEntity<PayCheckoutResponse> pay(@RequestBody PayCheckoutRequest payCheckoutRequest) {
+        return ResponseEntity.ok(checkoutService.pay(payCheckoutRequest));
+
     }
 }

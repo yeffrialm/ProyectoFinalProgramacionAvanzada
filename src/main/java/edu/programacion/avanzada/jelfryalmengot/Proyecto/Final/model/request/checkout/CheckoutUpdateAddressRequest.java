@@ -1,13 +1,11 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.request.checkout;
 
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.command.checkout.CheckoutUpdateAddressCommand;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.domain.Address;
 import lombok.*;
 
 import java.util.UUID;
 
 /**
- * @author jelfry on 7/09/2022.
+ * @author aluis on 7/10/2022.
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,12 +16,5 @@ public class CheckoutUpdateAddressRequest {
 
     private UUID id;
 
-    private Address address;
-
-    public CheckoutUpdateAddressCommand toCommand() {
-        return CheckoutUpdateAddressCommand.builder()
-                .address(address)
-                .build();
-    }
-
+    private Long address;
 }

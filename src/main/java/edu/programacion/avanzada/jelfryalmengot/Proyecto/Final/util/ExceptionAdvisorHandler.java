@@ -1,8 +1,7 @@
 package edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.util;
 
 import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.APIError;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.exceptions.AddressNoFoundException;
-import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.exceptions.BadSagaException;
+import edu.programacion.avanzada.jelfryalmengot.Proyecto.Final.model.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +17,29 @@ public class ExceptionAdvisorHandler {
         return createResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CheckoutAddressNoAssignedException.class)
+    public ResponseEntity<APIError> handle(CheckoutAddressNoAssignedException ex) {
+        return createResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CheckoutPaymentMethodNoAssignedException.class)
+    public ResponseEntity<APIError> handle(CheckoutPaymentMethodNoAssignedException ex) {
+        return createResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(AddressNoFoundException.class)
     public ResponseEntity<APIError> handle(AddressNoFoundException ex) {
         return createResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CheckoutNoFoundException.class)
+    public ResponseEntity<APIError> handle(CheckoutNoFoundException ex) {
+        return createResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(PayCheckoutWithoutProductsException.class)
+    public ResponseEntity<APIError> handle(PayCheckoutWithoutProductsException ex) {
+        return createResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     private ResponseEntity<APIError> createResponse(String message, HttpStatus httpStatus) {
