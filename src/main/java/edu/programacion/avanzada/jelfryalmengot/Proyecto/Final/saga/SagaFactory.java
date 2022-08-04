@@ -18,6 +18,7 @@ public class SagaFactory {
 
     public static Saga<PayCheckoutResponse> payCheckoutSaga(UUID key, PayCheckoutCommand command) {
         SagaPayload<PayCheckoutResponse> sagaPayload = new SagaPayload<>();
+        sagaPayload.addProperty(PayCheckoutCommand.ID, key);
         sagaPayload.addProperty(PayCheckoutCommand.COMMAND, command);
         return Saga.<PayCheckoutResponse>builder()
                 .name("Pay Ckeckout Saga")
